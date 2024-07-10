@@ -14,7 +14,7 @@ import Checkbox from "../../ui/Checkbox";
 
 import { useMoveBack } from "../../hooks/useMoveBack";
 import { useBooking } from "../../features/bookings/useBooking";
-import { useCheckin } from "../../features/Check-in-out/useCheckin";
+import { useCheckin } from "./useCheckin";
 import { useSettings } from "../../features/settings/useSettings";
 
 const Box = styled.div`
