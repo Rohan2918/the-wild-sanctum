@@ -1,21 +1,20 @@
 import styled from "styled-components";
-import { useState, useEffect } from "react";
-import { formatCurrency } from "../../utils/helpers";
-
 import BookingDataBox from "../../features/bookings/BookingDataBox";
 
 import Row from "../../ui/Row";
 import Heading from "../../ui/Heading";
 import ButtonGroup from "../../ui/ButtonGroup";
 import Button from "../../ui/Button";
-import Spinner from "../../ui/Spinner";
 import ButtonText from "../../ui/ButtonText";
-import Checkbox from "../../ui/Checkbox";
+import Spinner from "../../ui/Spinner";
 
 import { useMoveBack } from "../../hooks/useMoveBack";
-import { useBooking } from "../../features/bookings/useBooking";
+import { useBooking } from "../bookings/useBooking";
+import { useEffect, useState } from "react";
+import Checkbox from "../../ui/Checkbox";
+import { formatCurrency } from "../../utils/helpers";
 import { useCheckin } from "./useCheckin";
-import { useSettings } from "../../features/settings/useSettings";
+import { useSettings } from "../settings/useSettings";
 
 const Box = styled.div`
   /* Box */
@@ -29,7 +28,7 @@ function CheckinBooking() {
   const [confirmPaid, setConfirmPaid] = useState(false);
   const [addBreakfast, setAddBreakfast] = useState(false);
   const { booking, isLoading } = useBooking();
-  const { settings, isLoadig: isLoadingSettings } = useSettings();
+  const { settings, isLoading: isLoadingSettings } = useSettings();
 
   useEffect(() => setConfirmPaid(booking?.isPaid ?? false), [booking]);
 
@@ -47,8 +46,8 @@ function CheckinBooking() {
     numNights,
   } = booking;
 
-  const optionalBreakFastPrice =
-    settings.breakFastPrice * numNights * numGuests;
+  const optionalBreakfastPrice =
+    settings.breakfastPrice * numNights * numGuests;
 
   function handleCheckin() {
     if (!confirmPaid) return;
@@ -58,8 +57,8 @@ function CheckinBooking() {
         bookingId,
         breakfast: {
           hasBreakfast: true,
-          extrasPrice: optionalBreakFastPrice,
-          totalPrice: totalPrice + optionalBreakFastPrice,
+          extrasPrice: optionalBreakfastPrice,
+          totalPrice: totalPrice + optionalBreakfastPrice,
         },
       });
     } else {
@@ -86,7 +85,7 @@ function CheckinBooking() {
             }}
             id="breakfast"
           >
-            Want to add Breakfast for {formatCurrency(optionalBreakFastPrice)}?
+            Want to add breakfast for {formatCurrency(optionalBreakfastPrice)}?
           </Checkbox>
         </Box>
       )}
@@ -98,13 +97,13 @@ function CheckinBooking() {
           disabled={confirmPaid || isCheckingIn}
           id="confirm"
         >
-          I confirm that {guests.fullName} has paid the total amount of
+          I confirm that {guests.fullName} has paid the total amount of{" "}
           {!addBreakfast
             ? formatCurrency(totalPrice)
             : `${formatCurrency(
-                totalPrice + optionalBreakFastPrice
+                totalPrice + optionalBreakfastPrice
               )} (${formatCurrency(totalPrice)} + ${formatCurrency(
-                optionalBreakFastPrice
+                optionalBreakfastPrice
               )})`}
         </Checkbox>
       </Box>
