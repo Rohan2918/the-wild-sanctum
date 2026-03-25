@@ -1,2 +1,2 @@
 # The Wild Sanctum
-Link: https://the-wild-sanctum.netlify.app
+Link: https://the-wild-sanctums.netlify.app/
