@@ -7,6 +7,7 @@ import { subtractDates } from "../utils/helpers";
 import { bookings } from "./data-bookings";
 import { cabins } from "./data-cabins";
 import { guests } from "./data-guests";
+import { useQueryClient } from "@tanstack/react-query";
 
 // const originalSettings = {
 //   minBookingLength: 3,
@@ -102,6 +103,7 @@ async function createBookings() {
 
 function Uploader() {
   const [isLoading, setIsLoading] = useState(false);
+  const queryClient = useQueryClient();
 
   async function uploadAll() {
     setIsLoading(true);
@@ -115,6 +117,7 @@ function Uploader() {
     await createCabins();
     await createBookings();
 
+    queryClient.invalidateQueries(); 
     setIsLoading(false);
   }
 

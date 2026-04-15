@@ -16,10 +16,10 @@ const StyledDashboardLayout = styled.div`
 `;
 
 function DashboardLayout() {
-  const { bookings, isLoading: isLoading1 } = useRecentBookings();
-  const { confirmedStays, isLoading: isLoading2, numDays } = useRecentStays();
+  const { bookings, isLoading: isLoading1,refetch:bookingFetch } = useRecentBookings();
+  const { confirmedStays, isLoading: isLoading2, numDays,refetch:fetchConfirmedStays } = useRecentStays();
 
-  const { cabins, isLoading: isLoading3 } = useCabins();
+  const { cabins, isLoading: isLoading3,refetch:fetchCabins } = useCabins();
 
   if (isLoading1 || isLoading2 || isLoading3) return <Spinner />;
 
@@ -30,6 +30,9 @@ function DashboardLayout() {
         confirmedStays={confirmedStays}
         numDays={numDays}
         cabinCount={cabins.length}
+        refetch={bookingFetch}
+        refetchConfirmedStays={fetchConfirmedStays}
+        refetchCabins={fetchCabins}
       />
       <TodayActivity />
       <DurationChart confirmedStays={confirmedStays} />
