@@ -117,7 +117,7 @@ function Uploader() {
     await createCabins();
     await createBookings();
 
-    queryClient.invalidateQueries(); 
+    await queryClient.invalidateQueries();
     setIsLoading(false);
   }
 
